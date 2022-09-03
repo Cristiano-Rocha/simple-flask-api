@@ -8,8 +8,9 @@ This a simple api built with [Flask](https://flask.palletsprojects.com/en/2.2.x/
 * **[Poetry](https://python-poetry.org/)** Python Packaging and dependency management
 * **[Flask SQLAlchemy](https://flask-sqlalchemy.palletsprojects.com/e)** Flask-SQLAlchemy is an extension for Flask that adds support for SQLAlchemy to your application
 * **[Flask Migrate](https://flask-migrate.readthedocs.io/en/latest/)** Flask-Migrate is an extension that handles SQLAlchemy database migrations for Flask applications using Alembic
-**[Docker](https://www.docker.com/)** Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development 
-**[Docker Compose](https://docs.docker.com/compose/)** Compose is a tool for defining and running multi-container Docker applications
+  
+* **[Docker](https://www.docker.com/)** Docker takes away repetitive, mundane configuration tasks and is used throughout the development lifecycle for fast, easy and portable application development 
+* **[Docker Compose](https://docs.docker.com/compose/)** Compose is a tool for defining and running multi-container Docker applications
 
 ## 🌱 How to start this project
 
@@ -35,7 +36,7 @@ Will return all dogs record from database
             "size": "large"
 
         },
-        ...
+        {...}
     ]
 }
 ```
