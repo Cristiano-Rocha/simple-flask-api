@@ -39,6 +39,21 @@ def add_dog():
     logging.info('Dog added')
     return response
 
+@dog_api_bp.route('/api/dog/<int:id>', methods=['PUT'])
+def update_dog(id=None):
+    dog = Dog.query.filter_by(id=id).first()
+    dog.name = request.form['name']
+    dog.color = request.form['color']
+    dog.size = request.form['size']
+    dog.age = request.form['age']
+    dog.gender = request.form['gender']
+    dog.breed = request.form['breed']
+
+    db.session.commit()
+
+    response = jsonify({'message': 'Dog updated', 'dog': dog.to_json()})
+    return response
+
 
 @dog_api_bp.route('/api/dog/<id>', methods=['DELETE'])
 def delete_dog(id=None):
@@ -50,10 +65,4 @@ def delete_dog(id=None):
      response = jsonify({'message': 'Dog deleted'})
      return response
 
-@dog_api_bp.route('/api/dog/<id>', methods=['PUT'])
-def update_dog(id=None):
-    print(request.json)
-    dog = Dog.query.filter_by(id=id)
-    dog.update(request.json)
-    db.session.commit()
-    return jsonify(dog.first())
+
