@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "simple-flask-api"
 version = "0.1.0"
-description = ""
+description = "A simple flask api to manage dogs"
 authors = ["Cristiano Rocha <sdxadev@gmail.com>"]
 
 [tool.poetry.dependencies]
