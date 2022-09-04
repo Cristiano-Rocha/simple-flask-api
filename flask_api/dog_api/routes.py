@@ -3,26 +3,30 @@ from flask_api import db
 from .dog import Dog
 from flask import jsonify, request
 import logging
+from time import sleep
 
 @dog_api_bp.route('/api/dog', methods=['GET'])
 def show_dogs():
+    
     dogs = []
     print(type(Dog))
     for row in Dog.query.all():
         dogs.append(row.to_json())
 
+    sleep(10)
     response = jsonify({'results': dogs})
     return response
 
 
 @dog_api_bp.route('/api/dog', methods=['POST'])
 def add_dog():
-    name = request.form['name']
-    color = request.form['color']
-    size = request.form['size']
-    age = request.form['age']
-    gender = request.form['gender']
-    breed = request.form['breed']
+    json_request = request.json
+    name = json_request['name']
+    color = json_request['color']
+    size = json_request['size']
+    age = json_request['age']
+    gender = json_request['gender']
+    breed = json_request['breed']
 
     dog = Dog()
     dog.name = name
@@ -42,12 +46,13 @@ def add_dog():
 @dog_api_bp.route('/api/dog/<int:id>', methods=['PUT'])
 def update_dog(id=None):
     dog = Dog.query.filter_by(id=id).first()
-    dog.name = request.form['name']
-    dog.color = request.form['color']
-    dog.size = request.form['size']
-    dog.age = request.form['age']
-    dog.gender = request.form['gender']
-    dog.breed = request.form['breed']
+    json_request = request.json
+    dog.name = json_request['name']
+    dog.color =json_request['color']
+    dog.size = json_request['size']
+    dog.age = json_request['age']
+    dog.gender = json_request['gender']
+    dog.breed = json_request['breed']
 
     db.session.commit()
 
