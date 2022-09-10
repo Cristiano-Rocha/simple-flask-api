@@ -1,0 +1,181 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Dog API",
+    "description": "An API to manage dogs",
+    "contact": {
+      "email": "sdxadev@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.11"
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:5000/api/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "Dog",
+      "description": "Everything about your dogs"
+    }
+  ],
+  "paths": {
+    "/dog": {
+      "get": {
+        "tags": [
+          "Dog"
+        ],
+        "description": "Returns a list of dogs",
+        "summary": "list dogs",
+        "responses": {
+          "200": {
+            "description": "list of dogs",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Dog"
+                  },
+                  "example": {
+                    "results": [
+                      {
+                        "adopted": false,
+                        "age": "3",
+                        "breed": "Chihuahua",
+                        "color": "brown",
+                        "gender": "male",
+                        "id": 1,
+                        "name": "Pluto",
+                        "size": "small"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Dog not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "Dog"
+        ],
+        "summary": "Add a new dog",
+        "description": "Add a new dog",
+        "operationId": "add_dog",
+        "requestBody": {
+          "description": "Create a new dog",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Dog"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Succesful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/dog/{id}": {
+      "put": {
+        "tags": [
+          "Dog"
+        ],
+        "summary": "Update an existing dog",
+        "description": "Update an existing dog by Id",
+        "operationId": "update_dog",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "ID of pet to fetch",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Succesful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Dog"
+                  }
+                }
+              },
+              "application/xml": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Dog"
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid ID supplied"
+          },
+          "404": {
+            "description": "Dog not found"
+          },
+          "405": {
+            "description": "Validation exception"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Dog": {
+        "type": "object",
+        "properties": {
+          "dogID": {
+            "type": "integer",
+            "format": "int64",
+            "example": 10
+          },
+          "adopted": {
+            "type": "boolean",
+            "example": true
+          }
+        }
+      }
+    }
+  }
+}

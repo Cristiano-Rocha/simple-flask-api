@@ -1,32 +1,39 @@
 from . import dog_api_bp
 from flask_api import db
 from .dog import Dog
-from flask import jsonify, request
+from flask import jsonify, request, render_template
 import logging
 from time import sleep
 
-@dog_api_bp.route('/api/dog', methods=['GET'])
+
+@dog_api_bp.route("/api/dog", methods=["GET"])
 def show_dogs():
-    
+
     dogs = []
     print(type(Dog))
     for row in Dog.query.all():
         dogs.append(row.to_json())
 
     sleep(10)
-    response = jsonify({'results': dogs})
+    response = jsonify({"results": dogs})
     return response
 
 
-@dog_api_bp.route('/api/dog', methods=['POST'])
+@dog_api_bp.route("/api/docs")
+def get_docs():
+    print("sending docs")
+    return render_template("swaggerui.html")
+
+
+@dog_api_bp.route("/api/dog", methods=["POST"])
 def add_dog():
     json_request = request.json
-    name = json_request['name']
-    color = json_request['color']
-    size = json_request['size']
-    age = json_request['age']
-    gender = json_request['gender']
-    breed = json_request['breed']
+    name = json_request["name"]
+    color = json_request["color"]
+    size = json_request["size"]
+    age = json_request["age"]
+    gender = json_request["gender"]
+    breed = json_request["breed"]
 
     dog = Dog()
     dog.name = name
@@ -38,36 +45,35 @@ def add_dog():
 
     db.session.add(dog)
     db.session.commit()
-    
-    response = jsonify({'message': 'Dog added', 'dog': dog.to_json()})
-    logging.info('Dog added')
+
+    response = jsonify({"message": "Dog added", "dog": dog.to_json()})
+    logging.info("Dog added")
     return response
 
-@dog_api_bp.route('/api/dog/<int:id>', methods=['PUT'])
+
+@dog_api_bp.route("/api/dog/<int:id>", methods=["PUT"])
 def update_dog(id=None):
     dog = Dog.query.filter_by(id=id).first()
     json_request = request.json
-    dog.name = json_request['name']
-    dog.color =json_request['color']
-    dog.size = json_request['size']
-    dog.age = json_request['age']
-    dog.gender = json_request['gender']
-    dog.breed = json_request['breed']
+    dog.name = json_request["name"]
+    dog.color = json_request["color"]
+    dog.size = json_request["size"]
+    dog.age = json_request["age"]
+    dog.gender = json_request["gender"]
+    dog.breed = json_request["breed"]
 
     db.session.commit()
 
-    response = jsonify({'message': 'Dog updated', 'dog': dog.to_json()})
+    response = jsonify({"message": "Dog updated", "dog": dog.to_json()})
     return response
 
 
-@dog_api_bp.route('/api/dog/<id>', methods=['DELETE'])
+@dog_api_bp.route("/api/dog/<id>", methods=["DELETE"])
 def delete_dog(id=None):
-     dog = Dog.query.filter_by(id=id).first()
-     if not dog:
-         return jsonify({'message': f'Doesn\'t exist a dog with id {id}' })
-     db.session.delete(dog)
-     db.session.commit()
-     response = jsonify({'message': 'Dog deleted'})
-     return response
-
-
+    dog = Dog.query.filter_by(id=id).first()
+    if not dog:
+        return jsonify({"message": f"Doesn't exist a dog with id {id}"})
+    db.session.delete(dog)
+    db.session.commit()
+    response = jsonify({"message": "Dog deleted"})
+    return response

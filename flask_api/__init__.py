@@ -6,9 +6,16 @@ from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
+
 def create_app():
-    app = Flask(__name__)
-    environment_configuration = os.environ['CONFIGURATION_SETUP']
+    template_dir = "../template"
+    app = Flask(
+        __name__,
+        static_url_path="",
+        static_folder="../static",
+        template_folder=template_dir,
+    )
+    environment_configuration = os.environ["CONFIGURATION_SETUP"]
 
     app.config.from_object(environment_configuration)
 
@@ -21,6 +28,3 @@ def create_app():
 
         app.register_blueprint(dog_api_bp)
         return app
-    
-
-
