@@ -71,3 +71,17 @@ Update an existing record with the specific id
 }
 ```
 
+### How to run
+
+Build the image:
+
+```code
+docker build -t simple-flask-api:lastest -f simple-flask-api/Dockerfile simple-flask-api
+```
+
+Run the container with following command:
+```code 
+docker run -p 5000:5000 simple-flask-api:latest
+```
+
+
